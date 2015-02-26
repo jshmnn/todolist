@@ -2,49 +2,54 @@
 
 // Lessons learned
 //- avoid globale variables
-//- strive make functions reusable
+//- strive make functions reusable /////edited 6 to 42
 function updateItemStatus() {
 	var cbId = this.id.replace("cb_", "");
-	var itemText = document.getElementById("item_"+cbId);
+	var itemText = document.getElementById("item_"+ cbId);
 
 	if (this.checked) {
 		itemText.className = "checked";
-	} 
-	else {
+	} else {
 		itemText.className = "";  
 	}
 }
+
 function renameItem() {
-	//this == span
+	var newText = prompt("What should this item be renamed to?");
+
+	if (!newText || newText == "" || newText =="") {
+		return false;
+	}
+
+	this.innerText = newText;
 }
+
 function removeItem() {
-	//this == span
-	var spanId = this.id.replace("item_", "");
-	document.getElementById("li_" + spanId).style.display = "none";
+	this.style.display = "none";
 }
 
 function addNewItem(list, itemText) {
 
 	var date = new Date();
-	var id = "" + date. getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds(); 
+	var id = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds(); 
 
 	var listItem = document.createElement("li");
 	listItem.id = "li_" + id;
+	listItem.ondblclick = removeItem;
 
-	var checkbox = document.createElement("input");
-	checkbox.type = "checkbox";
-	checkbox.id = "cb_" + id;
-	checkbox.onclick = updateItemStatus;
+	var checkBox = document.createElement("input");
+	checkBox.type = "checkbox";
+	checkBox.id = "cb_" + id;
+	checkBox.onclick = updateItemStatus;
 	//here the attribute is TYPE and value is checkbox
 
 	var span = document.createElement("span");
 	span.id = "item_" + id;
 	span.innerText = itemText;
 	span.onclick = renameItem;
-	span.ondbleclick = removeItem;
 
 
-	listItem.appendChild(checkbox);
+	listItem.appendChild(checkBox);
 	listItem.appendChild(span);
 
 	list.appendChild(listItem);
