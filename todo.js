@@ -14,22 +14,34 @@ function updateItemStatus() {
 		itemText.className = "";  
 	}
 }
-
+function renameItem() {
+	//this == span
+}
+function removeItem() {
+	//this == span
+	var spanId = this.id.replace("item_", "");
+	document.getElementById("li_" + spanId).style.display = "none";
+}
 
 function addNewItem(list, itemText) {
-	totalItems++; 
+
+	var date = new Date();
+	var id = "" + date. getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds(); 
 
 	var listItem = document.createElement("li");
+	listItem.id = "li_" + id;
 
 	var checkbox = document.createElement("input");
 	checkbox.type = "checkbox";
-	checkbox.id = "cb_" + totalItems;
+	checkbox.id = "cb_" + id;
 	checkbox.onclick = updateItemStatus;
 	//here the attribute is TYPE and value is checkbox
 
 	var span = document.createElement("span");
-	span.id = "item_" + totalItems;
+	span.id = "item_" + id;
 	span.innerText = itemText;
+	span.onclick = renameItem;
+	span.ondbleclick = removeItem;
 
 
 	listItem.appendChild(checkbox);
@@ -39,7 +51,7 @@ function addNewItem(list, itemText) {
 
 }
 
-var totalItems = 0;
+
 var inItemText = document.getElementById("inItemText");
 inItemText.focus();
 inItemText.onkeyup = function(event) { 
